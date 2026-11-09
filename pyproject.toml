@@ -1,0 +1,86 @@
+[project]
+name = "qrbar"
+version = "0.1.0"
+description = "Generate barcodes and QR codes and render sticker and label documents (docx, ZPL) from templates."
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE", "src/qrbar/fonts/OFL.txt"]
+keywords = ["barcode", "qr", "zpl", "docx", "label", "sticker", "datamatrix", "arabic"]
+authors = [
+    { name = "aaltatan", email = "a.altatan@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "docxtpl>=0.20.2",
+    "jinja2>=3.1.6",
+    "pillow>=13.0.0",
+    "python-barcode>=0.16.1",
+    "segno>=1.6.6",
+    "zxing-cpp>=3.1.1",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Printing",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/aaltatan/qrbar"
+"Issues" = "https://github.com/aaltatan/qrbar/issues"
+
+[project.optional-dependencies]
+arabic = [
+    "arabic-reshaper>=3.1.0",
+    "python-bidi>=0.6.12",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.1",
+    "pypdf>=7.0.0",
+    "pytest>=9.2.0",
+    "qrbar[arabic]",
+    "ruff>=0.17.4",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--strict-markers"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+
+[[tool.mypy.overrides]]
+# these ship no type hints
+module = ["barcode", "barcode.*", "docxtpl", "arabic_reshaper", "bidi"]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812",  # conflicts with the formatter
+    "CPY001",  # no per-file copyright headers
+    "D100", "D101", "D102", "D103", "D104", "D105", "D107", "D203", "D213",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "PLR2004", "ANN", "ARG", "INP001", "E501", "FBT001"]
+"docs/**" = ["INP001"]  # a script, not a package
+
+[tool.uv.sources]
+qrbar = { workspace = true }
