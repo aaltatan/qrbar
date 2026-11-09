@@ -1,0 +1,3 @@
+# Keep LF everywhere, also on Windows checkouts (core.autocrlf=true): tests
+# compare fixtures such as label_203dpi.zpl byte for byte.
+* text=auto eol=lf
