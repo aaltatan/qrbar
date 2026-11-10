@@ -23,6 +23,7 @@ _NAMES = ("soffice", "libreoffice")
 
 _DEFAULT_PATHS = (
     Path("C:/Program Files/LibreOffice/program/soffice.exe"),
+    Path.home() / "scoop/apps/libreoffice/current/LibreOffice/program/soffice.exe",  # no PATH shim
     Path("/Applications/LibreOffice.app/Contents/MacOS/soffice"),
 )
 

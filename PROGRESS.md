@@ -14,7 +14,7 @@ below so later phases stay consistent.
 | 6 | Public API | done |
 | 7 | Arabic text in ZPL | done |
 | 8 | More symbologies | done |
-| 9 | PDF extra | not started |
+| 9 | PDF extra | done |
 | 10 | Release | in progress |
 
 Status values: `not started` / `in progress` / `done`.
@@ -103,6 +103,7 @@ Status values: `not started` / `in progress` / `done`.
 - [x] LibreOffice headless conversion
 - [x] Missing-LibreOffice error
 - [x] Tests (skip without LibreOffice)
+- [x] Real conversion: rendered sheet -> PDF page count (LibreOffice 26.8.2, 2026-11-10)
 
 ## Phase 10 - Release
 
@@ -238,3 +239,16 @@ Record answers to the "Decide" points in PHASES.md here.
   README's Python blocks. LICENSE (GPLv3), `[project.urls]`, licence files and
   classifiers in `pyproject.toml`; sdist and wheel checked. CI workflow written
   but never run. PyPI not published.
+- 2026-11-10: Phase 9 code done: `qrbar/pdf.py` (`docx_to_pdf`, `find_soffice`),
+  `ConversionError`. Error paths tested with a fake soffice (including a real
+  timeout that kills the process tree, checked on Windows). The real
+  LibreOffice test is still unrun: `scoop install libreoffice` failed twice
+  (download of the 358 MB MSI aborted / timed out). Install LibreOffice
+  (libreoffice.org) and run `uv run pytest tests/test_pdf.py -rs`; CI's Linux
+  3.12 job also installs it.
+- 2026-11-10: Phase 9 done. With LibreOffice 26.8.2 (scoop) the real test
+  passes: 25 copies -> 2 pages; 49 copies -> 3 and the skip-2 sample -> 1, the
+  same as Word. scoop puts no `soffice` on PATH, so its install folder is now
+  one of the default locations. Each conversion takes ~11 s here, mostly a
+  fresh LibreOffice profile per call (kept for parallel safety); a shared
+  profile would be faster if bulk PDF jobs need it.
