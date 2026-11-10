@@ -24,6 +24,7 @@ from typing import Any
 import jinja2
 from docx.shared import Mm
 from docxtpl import DocxTemplate, InlineImage
+from jinja2.sandbox import ImmutableSandboxedEnvironment
 
 from qrbar import symbologies
 from qrbar._checks import require_positive
@@ -116,7 +117,8 @@ def _open(template: bytes) -> DocxTemplate:
 
 
 def _environment(document: DocxTemplate) -> jinja2.Environment:
-    environment = jinja2.Environment(undefined=jinja2.StrictUndefined, autoescape=True)
+    # sandboxed: templates may come from uploads, so they must not reach Python internals
+    environment = ImmutableSandboxedEnvironment(undefined=jinja2.StrictUndefined, autoescape=True)
 
     environment.globals["barcode"] = partial(_code, document)
 

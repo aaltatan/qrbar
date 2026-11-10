@@ -225,3 +225,11 @@ def test_syntax_error_is_a_template_error() -> None:
 def test_invalid_docx_is_a_template_error(data: bytes) -> None:
     with pytest.raises(TemplateError, match=r"not a valid .docx file"):
         render_docx_paged(data, parse_records({}))
+
+
+@pytest.mark.parametrize(
+    "expression", ["cycler.__init__.__globals__", "items.__class__.__mro__", "qr.func.__globals__"]
+)
+def test_templates_cannot_reach_python_internals(expression: str) -> None:
+    with pytest.raises(TemplateError, match="unsafe"):
+        render_docx_paged(template(f"{{{{ {expression} }}}}"), parse_records({}))

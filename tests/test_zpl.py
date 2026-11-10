@@ -164,3 +164,11 @@ def test_more_symbologies_render_native_commands(call: str, field: str) -> None:
     data = {"upc": "03600029145", "text": "A~B_^", "words": "hello world"}
 
     assert render(f"^XA{{{{ {call} }}}}^XZ", data) == [f"^XA^CI28{field}^PQ1^XZ"]
+
+
+@pytest.mark.parametrize(
+    "expression", ["cycler.__init__.__globals__", "item.__class__.__mro__", "qr.__globals__"]
+)
+def test_templates_cannot_reach_python_internals(expression: str) -> None:
+    with pytest.raises(RecordError, match="unsafe"):
+        render(f"^XA{{{{ {expression} }}}}^XZ", {"name": "x"})

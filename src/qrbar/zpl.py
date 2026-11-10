@@ -25,6 +25,7 @@ from collections.abc import Callable, Sequence
 
 import jinja2
 from jinja2.runtime import Context
+from jinja2.sandbox import ImmutableSandboxedEnvironment
 
 from qrbar import symbologies
 from qrbar._checks import require_int, require_positive
@@ -102,7 +103,9 @@ def _decode(template: bytes) -> str:
 
 
 def _environment(font: bytes | None) -> jinja2.Environment:
-    environment = jinja2.Environment(  # noqa: S701 - output is ZPL, not HTML; see _finalize
+    # sandboxed: templates may come from uploads, so they must not reach Python internals;
+    # no autoescape: output is ZPL, not HTML, see _finalize
+    environment = ImmutableSandboxedEnvironment(
         undefined=jinja2.StrictUndefined,
         keep_trailing_newline=True,
         trim_blocks=True,
