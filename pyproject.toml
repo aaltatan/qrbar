@@ -52,6 +52,9 @@ dev = [
     "qrbar[arabic]",
     "ruff>=0.17.4",
 ]
+docs = [
+    "mkdocs-material>=9.7",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
