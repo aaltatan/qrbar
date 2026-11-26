@@ -1,5 +1,7 @@
 # qrbar
 
+**Documentation: <https://aaltatan.github.io/qrbar/>**
+
 Generate barcodes and QR codes, and render sticker and label documents
 (`.docx`, `.zpl` / `.prn`) from templates, for one item or thousands.
 
