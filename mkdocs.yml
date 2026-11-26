@@ -1,0 +1,88 @@
+site_name: qrbar
+site_description: Generate barcodes and QR codes and render sticker and label documents (docx, ZPL) from templates, for one item or thousands.
+site_url: https://aaltatan.github.io/qrbar/
+repo_url: https://github.com/aaltatan/qrbar
+repo_name: aaltatan/qrbar
+edit_uri: edit/main/docs/
+copyright: GPL-3.0-or-later
+exclude_docs: make_images.py
+
+theme:
+  name: material
+  icon:
+    logo: material/qrcode
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.action.edit
+    - toc.follow
+
+nav:
+  - Home: index.md
+  - Installation: install.md
+  - User guide:
+      - guide/index.md
+      - Barcode images: guide/images.md
+      - ZPL labels: guide/zpl.md
+      - Arabic text in ZPL: guide/arabic.md
+      - Word (docx) templates: guide/docx.md
+      - Label sheets: guide/sheets.md
+      - Data and quantities: guide/data.md
+      - PDF: guide/pdf.md
+      - Custom code types: guide/custom-symbologies.md
+  - Recipes: recipes.md
+  - Reference:
+      - reference/index.md
+      - API: reference/api.md
+      - Template functions: reference/template-functions.md
+      - Exceptions: reference/exceptions.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/aaltatan/qrbar
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/qrbar/
